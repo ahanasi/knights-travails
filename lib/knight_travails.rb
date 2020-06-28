@@ -11,31 +11,33 @@ class KnightTravails
     @board = Board.new().board
   end
 
-  def knight_moves(start_pos = [0, 0], end_pos = [3, 3])
+  def knight_moves(start_pos, end_pos)
+    return [start_pos] if (start_pos == end_pos)
     queue = []
+    result = [end_pos]
     queue << Node.new(start_pos)
 
     until queue.empty?
       current = queue[0]
-      binding.pry
-      current.children << possible_moves(current.value).map { |arr| binding.pry; Node.new(arr, current) }
+      current.children << valid_moves(possible_moves(current.value)).map { |arr| Node.new(arr, current) }
       current.children.flatten!
-      binding.pry
       if current.children.any? { |node| node.value == end_pos }
-        break
+        until current == nil
+          result << current.value
+          current = current.parent
+        end
+        return result.reverse!
       else
         queue << current.children
         queue.flatten!
-        binding.pry
         queue.shift
       end
     end
-    binding.pry
   end
 
   def possible_moves(position)
     moves = []
-    
+
     MOVES_1.each do |arr|
       moves << position.map.with_index { |val, i| val += arr[i] }
     end
