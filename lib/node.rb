@@ -2,7 +2,7 @@ class Node
   attr_accessor :value, :parent, :children
 
   def initialize(value, parent, children)
-    @position = position
+    @value = value
     @parent = parent
     @children = children
   end
