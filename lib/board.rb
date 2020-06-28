@@ -2,6 +2,7 @@ require_relative "node.rb"
 require "pry"
 
 class Board
+  attr_accessor :board
   NUMBERS = (0..7).to_a
 
   def initialize()
