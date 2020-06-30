@@ -3,7 +3,6 @@ require_relative "node.rb"
 require "pry"
 
 class KnightTravails
-  attr_accessor :board
   MOVES_1 = [[2, 1], [2, -1], [-2, 1], [-2, -1]]
   MOVES_2 = [[1, 2], [-1, 2], [1, -2], [-1, -2]]
 
@@ -77,9 +76,9 @@ class KnightTravails
     end_cd = end_cd.split(",").map!(&:to_i)
 
     @board.board[start[0]][start[1]] = "."
-    @board.board[end_cd[0]][end_cd[1]] = "♞"
 
     result = knight_moves(start, end_cd)
+    result.each { |arr| @board.board[arr[0]][arr[1]] = "♞"}
     @board.display_board()
 
     puts "You made it in #{result.length - 1} move(s)! Here is your path: "
