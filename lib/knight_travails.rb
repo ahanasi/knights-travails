@@ -53,18 +53,28 @@ class KnightTravails
   end
 
   def driver()
+    start = ""
+    end_cd = ""
+
     banner = File.read("lib/banner.txt")
     puts banner + "\n\n"
 
     @board.display_board()
     puts "\nPlease enter the start coordinates for your knight. (E.g. row,column --> 0,0)"
-    start = gets.chomp.split(",").map(&:to_i)
+
+    until start.match(/^[0-7],[0-7]$/)
+      start = gets.chomp
+    end
+    start = start.split(",").map(&:to_i)
 
     @board.board[start[0]][start[1]] = "♞"
     @board.display_board()
 
     puts "\nPlease enter the end coordinates for your knight. (E.g. row,column --> 0,0)"
-    end_cd = gets.chomp.split(",").map(&:to_i)
+    until end_cd.match(/^[0-7],[0-7]$/)
+      end_cd = gets.chomp
+    end
+    end_cd = end_cd.split(",").map!(&:to_i)
 
     @board.board[start[0]][start[1]] = "."
     @board.board[end_cd[0]][end_cd[1]] = "♞"
