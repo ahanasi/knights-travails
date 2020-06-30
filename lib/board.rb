@@ -3,14 +3,21 @@ require "pry"
 
 class Board
   attr_accessor :board
-  NUMBERS = (0..7).to_a
+  LABELS = ("0".."7").to_a
 
   def initialize()
-    @board = Array.new(64) { Node.new(nil, nil, nil) }
-    setup_board
+    @board = Array.new(8, ".").map { |row| Array.new(8, ".") }
   end
 
-  def setup_board
-    NUMBERS.product(NUMBERS).zip(@board) { |a, b| b.value = a }
+  def display_board()
+    print "\t"
+    print LABELS.join("\t")
+    puts
+    @board.each_with_index do |row, i|
+      print LABELS[i]
+      print "\t"
+      print row.join("\t")
+      puts
+    end
   end
 end
