@@ -8,7 +8,7 @@ class KnightTravails
   MOVES_2 = [[1, 2], [-1, 2], [1, -2], [-1, -2]]
 
   def initialize()
-    @board = Board.new().board
+    @board = Board.new()
   end
 
   def knight_moves(start_pos, end_pos)
@@ -51,7 +51,31 @@ class KnightTravails
   def valid_moves(all_moves)
     all_moves.select { |arr| arr if (arr.all? { |val| (val >= 0 && val < 8) }) }
   end
+
+  def driver()
+    banner = File.read("lib/banner.txt")
+    puts banner + "\n\n"
+
+    @board.display_board()
+    puts "\nPlease enter the start coordinates for your knight. (E.g. row,column --> 0,0)"
+    start = gets.chomp.split(",").map(&:to_i)
+
+    @board.board[start[0]][start[1]] = "♞"
+    @board.display_board()
+
+    puts "\nPlease enter the end coordinates for your knight. (E.g. row,column --> 0,0)"
+    end_cd = gets.chomp.split(",").map(&:to_i)
+
+    @board.board[start[0]][start[1]] = "."
+    @board.board[end_cd[0]][end_cd[1]] = "♞"
+
+    result = knight_moves(start, end_cd)
+    @board.display_board()
+
+    puts "You made it in #{result.length - 1} move(s)! Here is your path: "
+    result.each { |arr| p arr }
+  end
 end
 
-test = KnightTravails.new()
-binding.pry
+game = KnightTravails.new()
+game.driver
